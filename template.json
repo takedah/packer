@@ -1,0 +1,33 @@
+{
+  "builders":[{
+    "type": "virtualbox-iso",
+    "guest_os_type": "RedHat_64",
+    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/6.7/isos/x86_64/CentOS-6.7-x86_64-minimal.iso",
+    "iso_checksum": "9381a24b8bee2fed0c26896141a64b69",
+    "iso_checksum_type": "md5",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "3000s",
+    "vm_name": "box",
+    "http_directory": "./",
+    "boot_wait": "30s",
+    "boot_command":[
+      "<esc><wait>",
+    "linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg ",
+    "<enter><wait>"
+      ],
+    "shutdown_command": "sudo /sbin/poweroff"
+  }],
+  "provisioners":[{
+    "type": "shell",
+    "scripts": [
+      "base.sh"
+      ]
+  }],
+  "post-processors": [
+  {
+    "type": "vagrant",
+    "output": "./CentOS-6.7-x86_64-ja.box"
+  }
+  ]
+}
